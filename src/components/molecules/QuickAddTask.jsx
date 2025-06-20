@@ -6,13 +6,23 @@ import Button from '@/components/atoms/Button';
 export default function QuickAddTask({ onAdd }) {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (title.trim() && onAdd) {
-      onAdd({ title: title.trim() });
-      setTitle('');
-      setIsOpen(false);
+      setLoading(true);
+      try {
+        const success = await onAdd({ title: title.trim() });
+        if (success) {
+          setTitle('');
+          setIsOpen(false);
+        }
+      } catch (error) {
+        console.error('Error creating task:', error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -22,7 +32,6 @@ export default function QuickAddTask({ onAdd }) {
       setTitle('');
     }
   };
-
   return (
     <div className="relative">
       {!isOpen ? (
@@ -55,13 +64,14 @@ export default function QuickAddTask({ onAdd }) {
               className="flex-1 px-2 py-1 text-sm focus:outline-none"
               autoFocus
             />
-            <div className="flex items-center gap-1">
+<div className="flex items-center gap-1">
               <Button
                 type="submit"
                 size="sm"
-                disabled={!title.trim()}
+                disabled={!title.trim() || loading}
+                loading={loading}
               >
-                Add
+                {loading ? 'Adding...' : 'Add'}
               </Button>
               <button
                 type="button"
