@@ -19,17 +19,28 @@ export default function AnalyticsPage() {
     setLoading(true);
     setError(null);
     try {
-      const [statsData, tasksData, focusStats] = await Promise.all([
+const [statsData, tasksData, focusStats] = await Promise.all([
         taskService.getProductivityStats(),
         taskService.getAll(),
         focusSessionService.getTodayStats()
       ]);
       
+      // Map database fields to frontend format
+      const mappedTasks = (tasksData || []).map(task => ({
+        ...task,
+        title: task.title || task.Name,
+        dueDate: task.due_date,
+        projectId: task.project_id,
+        tags: task.Tags ? task.Tags.split(',').filter(tag => tag.trim()) : [],
+        estimatedMinutes: parseInt(task.estimated_minutes) || null,
+        actualMinutes: parseInt(task.actual_minutes) || null
+      }));
+      
       setStats({
         ...statsData,
         ...focusStats
       });
-      setTasks(tasksData);
+      setTasks(mappedTasks);
     } catch (err) {
       setError(err.message || 'Failed to load analytics');
       toast.error('Failed to load analytics');

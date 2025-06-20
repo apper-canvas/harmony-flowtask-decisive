@@ -20,13 +20,23 @@ export default function FocusPage() {
     setLoading(true);
     setError(null);
     try {
-      const [tasksData, statsData] = await Promise.all([
+const [tasksData, statsData] = await Promise.all([
         taskService.getByStatus('pending'),
         focusSessionService.getTodayStats()
       ]);
       
-      // Filter out completed tasks and sort by priority
-      const pendingTasks = tasksData.filter(task => task.status !== 'completed');
+      // Map database fields to frontend format and filter out completed tasks
+      const mappedTasks = (tasksData || []).map(task => ({
+        ...task,
+        title: task.title || task.Name,
+        dueDate: task.due_date,
+        projectId: task.project_id,
+        tags: task.Tags ? task.Tags.split(',').filter(tag => tag.trim()) : [],
+        estimatedMinutes: parseInt(task.estimated_minutes) || null,
+        actualMinutes: parseInt(task.actual_minutes) || null
+      }));
+      
+      const pendingTasks = mappedTasks.filter(task => task.status !== 'completed');
       const sortedTasks = pendingTasks.sort((a, b) => {
         const priorityOrder = { urgent: 4, high: 3, medium: 2, low: 1 };
         return priorityOrder[b.priority] - priorityOrder[a.priority];

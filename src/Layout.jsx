@@ -1,11 +1,28 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import ApperIcon from '@/components/ApperIcon';
 import { routeArray } from '@/config/routes';
 import AIChat from '@/components/organisms/AIChat';
 import QuickAddTask from '@/components/molecules/QuickAddTask';
+import { AuthContext } from './App';
 
+function LogoutButton() {
+  const { logout } = useContext(AuthContext);
+  const user = useSelector((state) => state.user.user);
+  
+  return (
+    <button 
+      onClick={logout}
+      className="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-50 transition-colors text-surface-600 hover:text-surface-900"
+      title={`Logout ${user?.firstName || 'User'}`}
+    >
+      <ApperIcon name="LogOut" size={20} />
+      <span className="hidden sm:inline text-sm font-medium">Logout</span>
+    </button>
+  );
+}
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [aiChatOpen, setAiChatOpen] = useState(false);
@@ -43,7 +60,7 @@ export default function Layout() {
             <QuickAddTask />
           </div>
 
-          {/* Right side */}
+{/* Right side */}
           <div className="flex items-center gap-2">
             <button className="p-2 rounded-lg hover:bg-surface-50 transition-colors">
               <ApperIcon name="Search" size={20} className="text-surface-600" />
@@ -51,6 +68,7 @@ export default function Layout() {
             <button className="p-2 rounded-lg hover:bg-surface-50 transition-colors">
               <ApperIcon name="Bell" size={20} className="text-surface-600" />
             </button>
+            <LogoutButton />
           </div>
         </div>
       </header>

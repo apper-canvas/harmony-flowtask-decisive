@@ -21,12 +21,36 @@ export default function TasksPage() {
     setLoading(true);
     setError(null);
     try {
-      const [tasksData, projectsData] = await Promise.all([
+const [tasksData, projectsData] = await Promise.all([
         taskService.getAll(),
         projectService.getAll()
       ]);
-      setTasks(tasksData);
-      setProjects(projectsData);
+      
+      // Map database fields to frontend format
+      const mappedTasks = (tasksData || []).map(task => ({
+        ...task,
+        title: task.title || task.Name,
+        dueDate: task.due_date,
+        projectId: task.project_id,
+        tags: task.Tags ? task.Tags.split(',').filter(tag => tag.trim()) : [],
+        estimatedMinutes: parseInt(task.estimated_minutes) || null,
+        actualMinutes: parseInt(task.actual_minutes) || null,
+        createdAt: task.created_at,
+        updatedAt: task.updated_at,
+        completedAt: task.completed_at,
+        assignedTo: task.assigned_to,
+        subtasks: task.subtasks ? task.subtasks.split('\n').filter(sub => sub.trim()) : []
+      }));
+      
+      const mappedProjects = (projectsData || []).map(project => ({
+        ...project,
+        name: project.Name || project.name,
+        isShared: project.is_shared,
+        createdAt: project.created_at
+      }));
+      
+      setTasks(mappedTasks);
+      setProjects(mappedProjects);
     } catch (err) {
       setError(err.message || 'Failed to load tasks');
       toast.error('Failed to load tasks');

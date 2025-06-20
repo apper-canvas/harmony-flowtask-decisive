@@ -21,9 +21,21 @@ export default function CalendarPage() {
   const loadTasks = async () => {
     setLoading(true);
     setError(null);
-    try {
+try {
       const tasksData = await taskService.getAll();
-      setTasks(tasksData);
+      
+      // Map database fields to frontend format
+      const mappedTasks = (tasksData || []).map(task => ({
+        ...task,
+        title: task.title || task.Name,
+        dueDate: task.due_date,
+        projectId: task.project_id,
+        tags: task.Tags ? task.Tags.split(',').filter(tag => tag.trim()) : [],
+        estimatedMinutes: parseInt(task.estimated_minutes) || null,
+        actualMinutes: parseInt(task.actual_minutes) || null
+      }));
+      
+      setTasks(mappedTasks);
     } catch (err) {
       setError(err.message || 'Failed to load tasks');
       toast.error('Failed to load tasks');
