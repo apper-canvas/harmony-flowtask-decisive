@@ -1,0 +1,38 @@
+[
+  {
+    "Id": 1,
+    "taskId": "1",
+    "startTime": "2024-12-18T09:00:00Z",
+    "endTime": "2024-12-18T09:25:00Z",
+    "duration": 25,
+    "type": "pomodoro",
+    "completed": true
+  },
+  {
+    "Id": 2,
+    "taskId": "1",
+    "startTime": "12/18/2024 9:30:00 AMZ",
+    "endTime": "2024-12-18T09:55:00Z",
+    "duration": 25,
+    "type": "pomodoro",
+    "completed": true
+  },
+  {
+    "Id": 3,
+    "taskId": "2",
+    "startTime": "2024-12-18T14:00:00Z",
+    "endTime": "2024-12-18T14:50:00Z",
+    "duration": 50,
+    "type": "custom",
+    "completed": true
+  },
+  {
+    "Id": 4,
+    "taskId": "4",
+    "startTime": "2024-12-18T16:00:00Z",
+    "endTime": null,
+    "duration": 25,
+    "type": "pomodoro",
+    "completed": false
+  }
+]

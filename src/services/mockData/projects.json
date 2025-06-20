@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "name": "Product Launch Q1",
+    "color": "#4F46E5",
+    "icon": "Rocket",
+    "description": "Major product launch preparation and execution for Q1 2024",
+    "isShared": true,
+    "members": ["user1", "user2", "user3"],
+    "createdAt": "2024-11-01T00:00:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "Team Management",
+    "color": "#10B981",
+    "icon": "Users",
+    "description": "Team development, performance management, and organizational tasks",
+    "isShared": false,
+    "members": ["user1"],
+    "createdAt": "2024-11-15T00:00:00Z"
+  },
+  {
+    "Id": 3,
+    "name": "Client Project Alpha",
+    "color": "#F59E0B",
+    "icon": "Briefcase",
+    "description": "Custom development project for key enterprise client",
+    "isShared": true,
+    "members": ["user1", "user4", "user5"],
+    "createdAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "Id": 4,
+    "name": "Personal Development",
+    "color": "#7C3AED",
+    "icon": "BookOpen",
+    "description": "Learning goals, skill development, and personal growth activities",
+    "isShared": false,
+    "members": ["user1"],
+    "createdAt": "2024-10-15T00:00:00Z"
+  }
+]

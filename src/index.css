@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import react-toastify CSS */
+@import 'react-toastify/dist/ReactToastify.css';
+
+/* Ensure scrollbars are visible */
+body {
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Prevent horizontal overflow */
+* {
+  max-width: 100%;
+}
+
+/* Main content areas must allow scroll */
+.main-content {
+  overflow-y: auto;
+  height: 100vh;
+}
+
+@layer utilities {
+  /* Only use scrollbar-hide for specific UI elements, never main content */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* AI Pulse effect */
+.ai-pulse {
+  animation: ai-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes ai-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+/* Focus mode overlay */
+.focus-overlay {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.95) 0%, rgba(124, 58, 237, 0.95) 100%);
+  backdrop-filter: blur(10px);
+}
+
+/* Matrix quadrants */
+.matrix-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  min-height: 400px;
+}
+
+/* Priority indicators */
+.priority-urgent {
+  border-left: 4px solid #EF4444;
+}
+
+.priority-high {
+  border-left: 4px solid #F59E0B;
+}
+
+.priority-medium {
+  border-left: 4px solid #3B82F6;
+}
+
+.priority-low {
+  border-left: 4px solid #10B981;
+}
+
+/* Task drag states */
+.task-dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+}
+
+.quadrant-drag-over {
+  background-color: rgba(79, 70, 229, 0.1);
+  border: 2px dashed #4F46E5;
+}
